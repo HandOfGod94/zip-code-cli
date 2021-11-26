@@ -3,14 +3,25 @@
             [zip-code-cli.client :as client]
             [vcr-clj.clj-http :refer [with-cassette]]))
 
+(def ^:const valid-pin 33162)
+(def ^:const invalid-pin 213142)
+
 (deftest get-zip-code-info-test
   (testing "status code should be 200 when call is successful"
     (with-cassette :zip-code-success
-      (let [resp (client/get-zip-code-info 33162)
+      (let [resp (client/get-zip-code-info valid-pin)
             headers (:headers resp)]
         (is (= 200 (get resp :status)))
         (is (= "application/json" (get headers :content-type))))))
 
   (testing "should thorw exception for invalid pincode"
     (with-cassette :zip-code-failure
-      (is (thrown? Exception (client/get-zip-code-info 213412))))))
+      (is (thrown? Exception (client/get-zip-code-info invalid-pin)))))
+
+  (testing "should return zipcode info for valid pincode"
+    (with-cassette :zip-code-success
+      (let [resp (:body (client/get-zip-code-info valid-pin))
+            country (:country resp)
+            places (:places resp)]
+        (is (= "United States" country))
+        (is (= "Florida" (:state (first places))))))))

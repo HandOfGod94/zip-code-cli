@@ -5,7 +5,8 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [clj-http "3.12.3"]
-                 [com.gfredericks/vcr-clj "0.4.22"]]
+                 [com.gfredericks/vcr-clj "0.4.22"]
+                 [cheshire "5.10.1"]]
   :main ^:skip-aot zip-code-cli.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
