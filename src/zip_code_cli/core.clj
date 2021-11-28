@@ -25,5 +25,5 @@
 
 (defn -main
   [& args]
-  (let [message (:message (parse args))]
+  (let [{:keys [message]} (parse args)]
     (println message)))
