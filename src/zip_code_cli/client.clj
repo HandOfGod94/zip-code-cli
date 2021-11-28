@@ -11,7 +11,8 @@
       (keyword)))
 
 (defn get-zip-code-info [pin-code]
-  (let [resp (client/get (str base-url pin-code))
-        body (:body resp)]
-    (->> (json/read-str body :key-fn kebabizer)
-         (assoc-in resp [:body]))))
+  (let [resp (client/get (str base-url pin-code))]
+    (as-> resp v
+      (:body v)
+      (json/read-str v :key-fn kebabizer)
+      (assoc-in resp [:body] v))))
