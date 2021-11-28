@@ -5,7 +5,7 @@
 
 (def ^:const base-url "https://api.zippopotam.us/us/")
 
-(defn kebabizer [raw-str]
+(defn- kebabizer [raw-str]
   (-> raw-str
       (string/replace #"\s+" "-")
       (keyword)))
