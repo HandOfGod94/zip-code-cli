@@ -21,10 +21,7 @@
   (testing "should return zipcode info for valid pincode"
     (with-cassette :zip-code-success
       (let [resp (:body (client/get-zip-code-info valid-pin))
-            post-code (:post-code resp)
-            country (:country resp)
-            country-abbreviation (:country-abbreviation resp)
-            places (:places resp)]
+            {:keys [post-code country country-abbreviation places]} resp]
         (is (= (str valid-pin) post-code))
         (is (= "US" country-abbreviation))
         (is (= "United States" country))
