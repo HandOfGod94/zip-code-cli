@@ -20,7 +20,7 @@
     (cond
       (:help options) {:message (usage-summary summary)}
       errors {:message (format "Ooops!! Something went wrong \n %s" summary)}
-      (:zip-code options) {:message (format "Fetching info for zip-code: %s" (:zip-code options))})))
+      (first arguments) {:message (str "Fetching info for zip-code: " (first arguments))})))
 
 
 (defn -main
