@@ -1,6 +1,7 @@
 (ns zip-code-cli.core
   (:require [clojure.tools.cli :as cli]
-            [clojure.string :as string])
+            [clojure.string :as string]
+            [zip-code-cli.client :as client])
   (:gen-class))
 
 (def cli-options [["-c" "--zip-code ZIPCODE" "Zip code of a US state"
@@ -20,7 +21,9 @@
     (cond
       (:help options) {:message (usage-summary summary)}
       errors {:message (format "Ooops!! Something went wrong \n %s" summary)}
-      (first arguments) {:message (str "Fetching info for zip-code: " (first arguments))})))
+      (first arguments) {:message (-> (first arguments)
+                                      (client/get-zip-code-info)
+                                      (get :body))})))
 
 
 (defn -main
