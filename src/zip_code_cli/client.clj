@@ -1,7 +1,8 @@
 (ns zip-code-cli.client
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [clojure.tools.logging :as log]))
 
 (def ^:const base-url "https://api.zippopotam.us/us/")
 
@@ -12,6 +13,7 @@
 
 (defn get-zip-code-info [pin-code]
   (let [resp (client/get (str base-url pin-code))]
+    (log/info "fetching zip code info for" pin-code)
     (as-> resp v
       (:body v)
       (json/read-str v :key-fn kebabizer)

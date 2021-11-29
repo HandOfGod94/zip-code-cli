@@ -7,7 +7,10 @@
                  [clj-http "3.12.3"]
                  [com.gfredericks/vcr-clj "0.4.22"]
                  [org.clojure/data.json "2.4.0"]
-                 [org.clojure/tools.cli "1.0.206"]]
+                 [org.clojure/tools.cli "1.0.206"]
+                 [org.clojure/tools.logging "1.1.0"]]
+  :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/jul-factory"
+             "-Djava.util.logging.ConsoleHandler.level=INFO"]
   :main ^:skip-aot zip-code-cli.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
